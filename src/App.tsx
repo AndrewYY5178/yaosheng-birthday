@@ -74,30 +74,51 @@ function BirthdaySection() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const particles: { x: number; y: number; vx: number; vy: number; life: number; size: number }[] = [];
+    interface Particle { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string; }
+    const particles: Particle[] = [];
     const cx = canvas.width / 2, cy = canvas.height / 2;
-    for (let i = 0; i < 120; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 2 + Math.random() * 6;
-      particles.push({
-        x: cx + (Math.random() - 0.5) * 200,
-        y: cy + (Math.random() - 0.5) * 100,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 2,
-        life: 1, size: 2 + Math.random() * 5,
-      });
-    }
+
+    const burst = (count: number, spread: number, speed: number) => {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const s = speed * (0.4 + Math.random() * 0.6);
+        const isSparkle = Math.random() < 0.3;
+        particles.push({
+          x: cx + (Math.random() - 0.5) * spread,
+          y: cy + (Math.random() - 0.5) * spread * 0.6,
+          vx: Math.cos(angle) * s,
+          vy: Math.sin(angle) * s - 1.5,
+          life: 1, maxLife: 2.5 + Math.random() * 3,
+          size: isSparkle ? 3 + Math.random() * 6 : 1.5 + Math.random() * 3,
+          color: isSparkle ? `rgba(255,255,255,${0.6 + Math.random() * 0.4})` : `rgba(193,231,215,${0.5 + Math.random() * 0.5})`,
+        });
+      }
+    };
+
+    // 3 waves of bursts
+    burst(180, 300, 8);
+    setTimeout(() => burst(100, 400, 10), 600);
+    setTimeout(() => burst(80, 350, 7), 1200);
 
     const animate = () => {
       ctx!.clearRect(0, 0, canvas.width, canvas.height);
       let alive = false;
       for (const p of particles) {
-        p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.life -= 0.008;
+        p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.life -= 0.005;
         if (p.life > 0) {
           alive = true;
+          // Glow circle
+          const glow = ctx!.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * p.life * 2);
+          glow.addColorStop(0, p.color.replace(/[\d.]+\)$/, `${p.life * 0.9})`));
+          glow.addColorStop(1, 'rgba(193,231,215,0)');
           ctx!.beginPath();
-          ctx!.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-          ctx!.fillStyle = `rgba(193,231,215,${p.life * 0.7})`;
+          ctx!.arc(p.x, p.y, p.size * p.life * 2, 0, Math.PI * 2);
+          ctx!.fillStyle = glow;
+          ctx!.fill();
+          // Core dot
+          ctx!.beginPath();
+          ctx!.arc(p.x, p.y, p.size * p.life * 0.5, 0, Math.PI * 2);
+          ctx!.fillStyle = p.color.replace(/[\d.]+\)$/, `${Math.min(1, p.life * 1.2)})`);
           ctx!.fill();
         }
       }
