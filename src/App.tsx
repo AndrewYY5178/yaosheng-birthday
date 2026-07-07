@@ -195,34 +195,51 @@ function MarqueeSection() {
 }
 
 /* ═══════════════ SECTION 3B: STICKY CARDS ═══════════════ */
+// Group images into 5 cards of 2-3 images each (last card has 2)
+const PHOTO_GROUPS = [
+  [IMAGES[0], IMAGES[1], IMAGES[2]],
+  [IMAGES[3], IMAGES[4], IMAGES[5]],
+  [IMAGES[6], IMAGES[7], IMAGES[8]],
+  [IMAGES[9], IMAGES[10], IMAGES[11]],
+  [IMAGES[12], IMAGES[13]],
+];
+
 function StickyCardsSection() {
   return (
     <section className="relative bg-[#111] pb-20">
-      <style>{`
-        .glass-card {
-          background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
-          backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-          border: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-          position: relative; overflow: hidden;
-        }
-        .glass-card::before {
-          content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
-          background: linear-gradient(180deg, rgba(193,231,215,0.45) 0%, rgba(193,231,215,0.15) 20%, rgba(193,231,215,0) 40%, rgba(193,231,215,0) 60%, rgba(193,231,215,0.15) 80%, rgba(193,231,215,0.45) 100%);
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
-        }
-      `}</style>
-      {IMAGES.map((src, i) => {
-        const total = IMAGES.length;
-        const scale = 1 - (total - 1 - i) * 0.015;
+      {PHOTO_GROUPS.map((group, i) => {
+        const total = PHOTO_GROUPS.length;
+        const scale = 1 - (total - 1 - i) * 0.03;
+        const [img1, img2, img3] = group;
         return (
-          <div key={i} className="glass-card sticky mx-auto rounded-3xl overflow-hidden flex items-center justify-center"
-            style={{ top: `${80 + i * 28}px`, width: `calc(80% - ${i * 8}px)`, minHeight: '50vh', zIndex: i, transform: `scale(${scale})`, background: '#111' }}>
-            <img src={src} alt="" className="w-full h-auto max-h-[70vh] block relative z-10 object-contain" />
+          <div key={i} className="sticky mx-auto rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#C1E7D7]/30 bg-[#111] p-4 sm:p-6 md:p-8 overflow-hidden"
+            style={{ top: `${80 + i * 28}px`, width: '85%', maxWidth: '900px', zIndex: i, transform: `scale(${scale})` }}>
+            {img3 ? (
+              /* 3-image layout: left col (img1+img2) + right col (img3) */
+              <div className="flex gap-3 sm:gap-4">
+                <div className="w-[40%] flex flex-col gap-3 sm:gap-4">
+                  <img src={img1} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ height: 'clamp(120px, 16vw, 220px)' }} />
+                  <img src={img2} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover flex-1" style={{ minHeight: 'clamp(150px, 22vw, 320px)' }} />
+                </div>
+                <div className="w-[60%]">
+                  <img src={img3} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" />
+                </div>
+              </div>
+            ) : (
+              /* 2-image layout: side by side */
+              <div className="flex gap-3 sm:gap-4">
+                <div className="w-1/2">
+                  <img src={img1} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
+                </div>
+                <div className="w-1/2">
+                  <img src={img2} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
-      <div className="h-[15vh]" />
+      <div className="h-[20vh]" />
     </section>
   );
 }
