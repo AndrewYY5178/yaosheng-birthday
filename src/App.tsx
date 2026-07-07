@@ -228,11 +228,11 @@ function BlessingMomentDivider() {
 
 /* ═══════════════ SECTION 4: WISHES ═══════════════ */
 const WISHES = [
-  "First of all，还是祝你身体健康。尽管现在是奋斗、拼搏的年纪，但是拥有健康的身体仍然是一切的前提。愿一切病痛远离你",
-  "希望在你的 19 岁里，你的未来愈加清晰与明朗，虽然迷茫可能不会消失，但是希望你走的每一步都是在向理想与梦想靠近。",
-  "我想，没有哪一段旅程是一帆风顺的，所以，与其祝你一切顺利与完美，我更想说，希望你可以尽情拥抱 19 岁的生活，无论是暖阳或是风雨，尽情体验，无论是错是对，都会很精彩",
-  "压力、焦虑注定是这个年纪的随礼，但是忙碌之余，别忘了让自己喘口气，也不妨允许自己犯点错",
-  "最后，祝你在 19 岁里，以顽强且坚韧的心态迎接一切未知，世界的绮丽都向你绽开，19 岁的生活像薄荷绿一样清新而活力！",
+  "“First of all，还是祝你身体健康。尽管现在是奋斗、拼搏的年纪，但是拥有健康的身体仍然是一切的前提。愿一切病痛远离你”",
+  "“希望在你的 19 岁里，你的未来愈加清晰与明朗，虽然迷茫可能不会消失，但是希望你走的每一步都是在向理想与梦想靠近。”",
+  "“我想，没有哪一段旅程是一帆风顺的，所以，与其祝你一切顺利与完美，我更想说，希望你可以尽情拥抱 19 岁的生活，无论是暖阳或是风雨，尽情体验，无论是错是对，都会很精彩”",
+  "“压力、焦虑注定是这个年纪的随礼，但是忙碌之余，别忘了让自己喘口气，也不妨允许自己犯点错”",
+  "“最后，祝你在 19 岁里，以顽强且坚韧的心态迎接一切未知，世界的绮丽都向你绽开，19 岁的生活像薄荷绿一样清新而活力！”",
 ];
 
 function WishesSection() {
@@ -325,6 +325,12 @@ export default function App() {
       {showSite && (
         <>
           <BirthdaySection />
+          <div className="flex flex-col items-center justify-center py-16 md:py-20" style={{ minHeight: '30vh' }}>
+            <p className="font-[family-name:var(--font-heading)] text-[clamp(1.5rem,5vw,3rem)] italic text-[#C1E7D7]">
+              <span className="inline-block animate-[pullUp_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards]">Some</span>{' '}
+              <span className="inline-block animate-[pullUp_0.6s_cubic-bezier(0.16,1,0.3,1)_0.1s_forwards]" style={{ opacity: 0 }}>Memories</span>
+            </p>
+          </div>
           <MarqueeSection />
           <StickyCardsSection />
           <BlessingMomentDivider />
