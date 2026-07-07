@@ -198,13 +198,27 @@ function MarqueeSection() {
 function StickyCardsSection() {
   return (
     <section className="relative bg-[#111] pb-20">
+      <style>{`
+        .glass-card {
+          background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
+          backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+          border: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+          position: relative; overflow: hidden;
+        }
+        .glass-card::before {
+          content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+          background: linear-gradient(180deg, rgba(193,231,215,0.45) 0%, rgba(193,231,215,0.15) 20%, rgba(193,231,215,0) 40%, rgba(193,231,215,0) 60%, rgba(193,231,215,0.15) 80%, rgba(193,231,215,0.45) 100%);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+        }
+      `}</style>
       {IMAGES.map((src, i) => {
         const total = IMAGES.length;
         const scale = 1 - (total - 1 - i) * 0.015;
         return (
-          <div key={i} className="sticky mx-auto rounded-2xl overflow-hidden border-2 border-[#C1E7D7]/20"
-            style={{ top: `${80 + i * 28}px`, width: `calc(80% - ${i * 8}px)`, height: '55vh', zIndex: i, background: '#1a1a1a', transform: `scale(${scale})` }}>
-            <img src={src} alt="" className="w-full h-full object-cover" />
+          <div key={i} className="glass-card sticky mx-auto rounded-3xl overflow-hidden"
+            style={{ top: `${80 + i * 28}px`, width: `calc(80% - ${i * 8}px)`, height: '55vh', zIndex: i, transform: `scale(${scale})` }}>
+            <img src={src} alt="" className="w-full h-full object-cover relative z-10 rounded-3xl" style={{ padding: '6px' }} />
           </div>
         );
       })}
@@ -267,7 +281,8 @@ function WishBlock({ text }: { text: string }) {
     <p className="text-base md:text-lg leading-[2] text-[#C1E7D7]/80 text-center max-w-lg mx-auto font-[family-name:var(--font-body)]">
       {chars.map((c, i) => (
         <motion.span key={i} initial={{ opacity: 0.2 }}
-          whileInView={{ opacity: 1 }} viewport={{ once: true, margin: '-50px' }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, margin: '-10%' }}
           transition={{ delay: i * 0.015, duration: 0.3 }}>
           {c}
         </motion.span>
