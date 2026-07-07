@@ -217,8 +217,8 @@ function StickyCardsSection() {
         const scale = 1 - (total - 1 - i) * 0.015;
         return (
           <div key={i} className="glass-card sticky mx-auto rounded-3xl overflow-hidden"
-            style={{ top: `${80 + i * 28}px`, width: `calc(80% - ${i * 8}px)`, height: '55vh', zIndex: i, transform: `scale(${scale})` }}>
-            <img src={src} alt="" className="w-full h-full object-cover relative z-10 rounded-3xl" style={{ padding: '6px' }} />
+            style={{ top: `${80 + i * 28}px`, width: `calc(80% - ${i * 8}px)`, zIndex: i, transform: `scale(${scale})` }}>
+            <img src={src} alt="" className="w-full h-auto block relative z-10" />
           </div>
         );
       })}
