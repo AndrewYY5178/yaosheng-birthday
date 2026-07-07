@@ -128,14 +128,14 @@ function BirthdaySection() {
     return () => cancelAnimationFrame(animRef.current);
   }, [showParticles]);
 
-  const text = "Happy Birthday XuYaoSheng".split('');
-
+  const line1 = "Happy Birthday".split('');
+  const line2 = "XuYaoSheng".split('');
   return (
     <section className="relative min-h-screen bg-[#111] flex items-center justify-center overflow-hidden">
       {showParticles && <canvas ref={canvasRef} className="absolute inset-0 z-20 pointer-events-none" />}
       <div className="relative z-10 text-center px-4">
-        <h1 className="font-[family-name:var(--font-heading)] text-[clamp(40px,10vw,100px)] leading-[0.95] tracking-[-0.03em]">
-          {text.map((c, i) => (
+        <h1 className="font-[family-name:var(--font-heading)] text-[clamp(36px,8vw,80px)] leading-[1.1] tracking-[-0.03em]">
+          {line1.map((c, i) => (
             <motion.span key={i} initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -148,6 +148,22 @@ function BirthdaySection() {
                 animation: c === ' ' ? 'none' : `shinyBirthday 6s linear ${i * 0.04}s infinite`,
               }}>
               {c === ' ' ? ' ' : c}
+            </motion.span>
+          ))}
+          <br />
+          {line2.map((c, i) => (
+            <motion.span key={'l2'+i} initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: (line1.length + i) * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-block"
+              style={{
+                background: `linear-gradient(90deg, ${MINT} 20%, #fff 50%, ${MINT} 80%)`,
+                backgroundSize: '200% auto',
+                WebkitBackgroundClip: 'text', backgroundClip: 'text',
+                color: 'transparent',
+                animation: `shinyBirthday 6s linear ${(line1.length + i) * 0.04}s infinite`,
+              }}>
+              {c}
             </motion.span>
           ))}
         </h1>
@@ -210,32 +226,16 @@ function StickyCardsSection() {
       {PHOTO_GROUPS.map((group, i) => {
         const total = PHOTO_GROUPS.length;
         const scale = 1 - (total - 1 - i) * 0.03;
-        const [img1, img2, img3] = group;
         return (
           <div key={i} className="sticky mx-auto rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#C1E7D7]/30 bg-[#111] p-4 sm:p-6 md:p-8 overflow-hidden"
             style={{ top: `${80 + i * 28}px`, width: '85%', maxWidth: '900px', zIndex: i, transform: `scale(${scale})` }}>
-            {img3 ? (
-              /* 3-image layout: left col (img1+img2) + right col (img3) */
-              <div className="flex gap-3 sm:gap-4">
-                <div className="w-[40%] flex flex-col gap-3 sm:gap-4">
-                  <img src={img1} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ height: 'clamp(120px, 16vw, 220px)' }} />
-                  <img src={img2} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover flex-1" style={{ minHeight: 'clamp(150px, 22vw, 320px)' }} />
-                </div>
-                <div className="w-[60%]">
-                  <img src={img3} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" />
-                </div>
-              </div>
-            ) : (
-              /* 2-image layout: side by side */
-              <div className="flex gap-3 sm:gap-4">
-                <div className="w-1/2">
-                  <img src={img1} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
-                </div>
-                <div className="w-1/2">
-                  <img src={img2} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
-                </div>
-              </div>
-            )}
+            <div className="flex flex-col gap-3 sm:gap-4">
+              {group.map((src, j) => (
+                <img key={j} src={src} alt="" loading="lazy"
+                  className="w-full h-auto rounded-[24px] sm:rounded-[32px] md:rounded-[40px]"
+                  style={{ maxHeight: '60vh' }} />
+              ))}
+            </div>
           </div>
         );
       })}
@@ -310,7 +310,8 @@ function WishBlock({ text }: { text: string }) {
 
 /* ═══════════════ SECTION 5: ENDING ═══════════════ */
 function EndingSection() {
-  const words = "Happy Birthday XuYaoSheng".split(' ');
+  const line1 = "Happy Birthday".split(' ');
+  const line2 = "XuYaoSheng".split(' ');
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Background image — low opacity, like Mindloop */}
@@ -320,8 +321,8 @@ function EndingSection() {
       {/* Gradient fade to black at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#111] to-transparent z-10" />
       <div className="relative z-20">
-        <h2 className="font-[family-name:var(--font-heading)] text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em]">
-          {words.map((w, i) => (
+        <h2 className="font-[family-name:var(--font-heading)] text-[clamp(2.5rem,8vw,6rem)] leading-[1.15] tracking-[-0.03em]">
+          {line1.map((w, i) => (
             <motion.span key={i} initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
               transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -332,6 +333,22 @@ function EndingSection() {
                 WebkitBackgroundClip: 'text', backgroundClip: 'text',
                 color: 'transparent',
                 animation: `shinyEnd 6s linear ${i * 0.12}s infinite`,
+              }}>
+              {w}
+            </motion.span>
+          ))}
+          <br />
+          {line2.map((w, i) => (
+            <motion.span key={'e2'+i} initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
+              transition={{ delay: (line1.length + i) * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-block mr-[0.25em]"
+              style={{
+                background: `linear-gradient(90deg, ${MINT} 20%, #fff 50%, ${MINT} 80%)`,
+                backgroundSize: '200% auto',
+                WebkitBackgroundClip: 'text', backgroundClip: 'text',
+                color: 'transparent',
+                animation: `shinyEnd 6s linear ${(line1.length + i) * 0.12}s infinite`,
               }}>
               {w}
             </motion.span>
