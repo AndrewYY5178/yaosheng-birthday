@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /* ═══════════════════════════════════════════
-   Happy Birthday · YaoSheng · 2026.07.08
+   Happy Birthday · XuYaoSheng · 2026.07.08
    Mint green #C1E7D7 × Ink #111
    ═══════════════════════════════════════════ */
 
@@ -17,7 +17,7 @@ function CountdownSection({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     const start = performance.now();
-    const dur = 3200;
+    const dur = 6000;
     const tick = () => {
       const p = Math.min((performance.now() - start) / dur, 1);
       setCount(Math.floor(p * 19));
@@ -222,9 +222,9 @@ function WishesSection() {
           <div key={i}>
             <WishBlock text={wish} />
             {i < WISHES.length - 1 && (
-              <div className="flex flex-col items-center gap-2 py-6">
-                <span className="text-[10px] uppercase tracking-[0.2em] text-white/20">Continue</span>
-                <div className="w-px h-8 bg-white/10 relative overflow-hidden">
+              <div className="flex flex-col items-center justify-center gap-3 py-10" style={{ minHeight: '70vh' }}>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-white/20">Scroll</span>
+                <div className="w-px h-12 bg-white/10 relative overflow-hidden">
                   <div className="w-full h-1/3 absolute top-0" style={{
                     background: `linear-gradient(to bottom, transparent, ${MINT}40, transparent)`,
                     animation: 'scrollDown 1.5s ease-in-out infinite',
