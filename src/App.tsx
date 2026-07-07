@@ -128,7 +128,7 @@ function BirthdaySection() {
     return () => cancelAnimationFrame(animRef.current);
   }, [showParticles]);
 
-  const text = "Happy Birthday Yaosheng".split('');
+  const text = "Happy Birthday XuYaoSheng".split('');
 
   return (
     <section className="relative min-h-screen bg-[#111] flex items-center justify-center overflow-hidden">
@@ -278,7 +278,7 @@ function WishBlock({ text }: { text: string }) {
 
 /* ═══════════════ SECTION 5: ENDING ═══════════════ */
 function EndingSection() {
-  const words = "Happy Birthday Yaosheng".split(' ');
+  const words = "Happy Birthday XuYaoSheng".split(' ');
   return (
     <section className="min-h-screen bg-[#111] flex flex-col items-center justify-center px-4 text-center">
       <h2 className="font-[family-name:var(--font-heading)] text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em]">
