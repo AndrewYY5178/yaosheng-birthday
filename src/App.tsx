@@ -280,29 +280,37 @@ function WishBlock({ text }: { text: string }) {
 function EndingSection() {
   const words = "Happy Birthday XuYaoSheng".split(' ');
   return (
-    <section className="min-h-screen bg-[#111] flex flex-col items-center justify-center px-4 text-center">
-      <h2 className="font-[family-name:var(--font-heading)] text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em]">
-        {words.map((w, i) => (
-          <motion.span key={i} initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
-            transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-block mr-[0.25em]"
-            style={{
-              background: `linear-gradient(90deg, ${MINT} 20%, #fff 50%, ${MINT} 80%)`,
-              backgroundSize: '200% auto',
-              WebkitBackgroundClip: 'text', backgroundClip: 'text',
-              color: 'transparent',
-              animation: `shinyEnd 6s linear ${i * 0.12}s infinite`,
-            }}>
-            {w}
-          </motion.span>
-        ))}
-      </h2>
-      <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="font-[family-name:var(--font-heading)] text-xl md:text-3xl text-[#C1E7D7]/40 italic mt-8">
-        2026.07.08
-      </motion.p>
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 text-center overflow-hidden">
+      {/* Background image — low opacity, like Mindloop */}
+      <div className="absolute inset-0 z-0">
+        <img src="/ending-bg.jpg" alt="" className="w-full h-full object-cover opacity-20" />
+      </div>
+      {/* Gradient fade to black at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#111] to-transparent z-10" />
+      <div className="relative z-20">
+        <h2 className="font-[family-name:var(--font-heading)] text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-[-0.03em]">
+          {words.map((w, i) => (
+            <motion.span key={i} initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
+              transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-block mr-[0.25em]"
+              style={{
+                background: `linear-gradient(90deg, ${MINT} 20%, #fff 50%, ${MINT} 80%)`,
+                backgroundSize: '200% auto',
+                WebkitBackgroundClip: 'text', backgroundClip: 'text',
+                color: 'transparent',
+                animation: `shinyEnd 6s linear ${i * 0.12}s infinite`,
+              }}>
+              {w}
+            </motion.span>
+          ))}
+        </h2>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="font-[family-name:var(--font-heading)] text-xl md:text-3xl text-[#C1E7D7]/40 italic mt-8">
+          2026.07.08
+        </motion.p>
+      </div>
       <style>{`@keyframes shinyEnd { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }`}</style>
     </section>
   );
@@ -320,6 +328,15 @@ export default function App() {
           <MarqueeSection />
           <StickyCardsSection />
           <BlessingMomentDivider />
+          <div className="flex flex-col items-center justify-center py-10" style={{ minHeight: '50vh' }}>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/20">Scroll</span>
+            <div className="w-px h-12 bg-white/10 relative overflow-hidden mt-2">
+              <div className="w-full h-1/3 absolute top-0" style={{
+                background: `linear-gradient(to bottom, transparent, ${MINT}40, transparent)`,
+                animation: 'scrollDown 1.5s ease-in-out infinite',
+              }} />
+            </div>
+          </div>
           <WishesSection />
           <EndingSection />
         </>
