@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
    ═══════════════════════════════════════════ */
 
 const MINT = '#C1E7D7';
-const IMAGES = Array.from({ length: 14 }, (_, i) => `/memories/${String(i + 1).padStart(2, '0')}.jpg`);
+const IMAGES = Array.from({ length: 14 }, (_, i) => `./memories/${String(i + 1).padStart(2, '0')}.jpg`);
 
 /* ═══════════════ SECTION 1: COUNTDOWN ═══════════════ */
 function CountdownSection({ onDone }: { onDone: () => void }) {
@@ -226,16 +226,30 @@ function StickyCardsSection() {
       {PHOTO_GROUPS.map((group, i) => {
         const total = PHOTO_GROUPS.length;
         const scale = 1 - (total - 1 - i) * 0.03;
+        const [img1, img2, img3] = group;
         return (
           <div key={i} className="sticky mx-auto rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#C1E7D7]/30 bg-[#111] p-4 sm:p-6 md:p-8 overflow-hidden"
             style={{ top: `${80 + i * 28}px`, width: '85%', maxWidth: '900px', zIndex: i, transform: `scale(${scale})` }}>
-            <div className="flex flex-col gap-3 sm:gap-4">
-              {group.map((src, j) => (
-                <img key={j} src={src} alt="" loading="lazy"
-                  className="w-full h-auto rounded-[24px] sm:rounded-[32px] md:rounded-[40px]"
-                  style={{ maxHeight: '60vh' }} />
-              ))}
-            </div>
+            {img3 ? (
+              <div className="flex gap-3 sm:gap-4">
+                <div className="w-[40%] flex flex-col gap-3 sm:gap-4">
+                  <img src={img1} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ height: 'clamp(120px, 16vw, 220px)' }} />
+                  <img src={img2} alt="" loading="lazy" className="w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover flex-1" style={{ minHeight: 'clamp(150px, 22vw, 320px)' }} />
+                </div>
+                <div className="w-[60%]">
+                  <img src={img3} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" />
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-3 sm:gap-4">
+                <div className="w-1/2">
+                  <img src={img1} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
+                </div>
+                <div className="w-1/2">
+                  <img src={img2} alt="" loading="lazy" className="w-full h-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] object-cover" style={{ minHeight: 'clamp(200px, 30vw, 450px)' }} />
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
@@ -316,7 +330,7 @@ function EndingSection() {
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Background image — low opacity, like Mindloop */}
       <div className="absolute inset-0 z-0">
-        <img src="/ending-bg.jpg" alt="" className="w-full h-full object-cover opacity-20" />
+        <img src="./ending-bg.jpg" alt="" className="w-full h-full object-cover opacity-20" />
       </div>
       {/* Gradient fade to black at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#111] to-transparent z-10" />
